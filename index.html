@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prioritizing Content Refresh Opportunities | Oğuzhan Duyar</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #1a1a1a;
+            --accent-color: #2563eb;
+            --border-color: #e5e7eb;
+            --code-bg: #f3f4f6;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.68;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-size: 2.2rem;
+            line-height: 1.25;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .meta {
+            font-size: 0.95rem;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+        .badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 35px;
+        }
+        .badge {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #e0e7ff;
+            color: #3730a3;
+            font-weight: 600;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border-color);
+            margin: 30px 0;
+        }
+        .toc {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px 24px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        .toc h3 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+        .toc ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .toc li {
+            margin-bottom: 6px;
+        }
+        .toc a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        h2 {
+            font-size: 1.45rem;
+            margin-top: 45px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+        .abstract-box {
+            background-color: #f8fafc;
+            border-left: 4px solid var(--accent-color);
+            padding: 18px 20px;
+            margin-bottom: 30px;
+            border-radius: 0 6px 6px 0;
+            font-size: 1.02rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: var(--card-bg);
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px 14px;
+            text-align: left;
+        }
+        th {
+            background-color: #f9fafb;
+            font-weight: 600;
+        }
+        .figure {
+            margin: 35px 0;
+            text-align: center;
+        }
+        .figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            display: block;
+            margin: 0 auto;
+        }
+        .caption {
+            font-size: 0.88rem;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+        code {
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Prioritizing Content Refresh Opportunities: Evaluating Heuristic Volume Baselines Against Machine Learning Classifiers in Enterprise Search Warehouses</h1>
+    <div class="meta">Oğuzhan Duyar · FlyRank ML Internship · September 2026</div>
+    <div class="badges">
+        <span class="badge">Decision-Support</span>
+        <span class="badge">Observational Study</span>
+        <span class="badge">Client-Holdout Validated</span>
+    </div>
+
+    <div class="toc">
+        <h3>Contents</h3>
+        <ol>
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#introduction">Introduction / Problem Statement</a></li>
+            <li><a href="#data">Data</a></li>
+            <li><a href="#methodology">Methodology</a></li>
+            <li><a href="#results">Results</a></li>
+            <li><a href="#limitations">Limitations & Honest Framing</a></li>
+            <li><a href="#recommendations">Ranked Recommendations</a></li>
+            <li><a href="#reproducibility">Reproducibility</a></li>
+            <li><a href="#acknowledgments">Acknowledgments & Data Credit</a></li>
+        </ol>
+    </div>
+
+    <h2 id="abstract">1. Abstract</h2>
+    <div class="abstract-box">
+        This study evaluates whether non-linear machine learning classifiers provide meaningful decision advantages over transparent heuristic baselines when identifying high-potential content refresh targets. Using DuckDB, we extracted 101,441 unique content items across 44 enterprise clients from the FlyRank search warehouse (March 2026 release). We formulated the refresh opportunity problem as classifying URLs with strong keyword visibility but depressed click capture, validating models via a strict client-holdout split. The Random Forest classifier demonstrated a consistent +0.101 ROC AUC advantage over the heuristic baseline (0.697 vs. 0.596), primarily guided by total impressions and CTR. However, because production search demand carries high baseline variance, we advise using machine learning probabilities to sort an operational review queue rather than automating updates without human verification.
+    </div>
+
+    <h2 id="introduction">2. Introduction / Problem Statement</h2>
+    <p>
+        Enterprise digital marketing and SEO departments face severe resource constraints. While production websites maintain tens of thousands of indexed URLs, editorial teams can realistically update, re-optimize, or consolidate only 15 to 30 pages per sprint. Relying on raw percentage drop metrics leads to massive false positives caused by low-volume volatility (e.g., a page dropping from 4 to 1 clicks registers as a 75% collapse).
+    </p>
+    <p>
+        The engineering objective of this capstone is to construct a reproducible decision-support system that ranks decaying and high-opportunity URLs. Specifically, we investigate: <em>Does a trained classification model (Logistic Regression or Random Forest) outperform a transparent logarithmic volume heuristic when evaluated on completely unseen enterprise clients?</em>
+    </p>
+
+    <h2 id="data">3. Data</h2>
+    <p>
+        The study utilizes the production search warehouse release <code>month=2026-03</code> hosted on the gated FlyRank Hugging Face repository. Ingestion and transformation were executed out-of-core using DuckDB.
+    </p>
+    <ul>
+        <li><strong>Raw Table:</strong> <code>fact_content_daily_performance</code> (daily grains of GSC visibility and GA4 user sessions).</li>
+        <li><strong>Inclusion Filters:</strong> Filtered strictly for records with verified GSC tracking (<code>gsc_data_available = true</code>) and a minimum monthly impression volume of 100 to eliminate statistical noise.</li>
+        <li><strong>Dataset Size:</strong> 101,441 aggregated content hashes distributed across 44 distinct enterprise client ecosystems (<code>client_hash_id</code>).</li>
+        <li><strong>Target Distribution:</strong> 24,433 positive opportunity candidates (24.08%) vs. 77,008 baseline URLs (75.92%).</li>
+    </ul>
+
+    <h2 id="methodology">4. Methodology</h2>
+    <p>
+        <strong>Label Definition:</strong> A URL is labeled as a high-value refresh opportunity (<code>refresh_opportunity = 1</code>) if its impression-weighted average SERP position sits between 10.0 and 30.0 (Google page 2 and 3 striking distance) while capturing fewer than 5 organic clicks over the month.
+    </p>
+    <p>
+        <strong>Leakage Prevention:</strong> To prevent target leakage, exact position and raw click counts were strictly excluded from model feature sets. The classifiers relied entirely on independent behavioral and engagement signals: <code>active_days</code>, <code>total_impressions</code>, <code>ctr</code>, <code>total_organic_sessions</code>, <code>total_ai_sessions</code>, and <code>total_scroll_events</code>.
+    </p>
+    <p>
+        <strong>Validation Design:</strong> Standard random splits artificially inflate model metrics due to client-specific URL structures leaking across folds. We enforced a <strong>GroupShuffleSplit (Client-Holdout)</strong> with a 75/25 split:
+    </p>
+    <ul>
+        <li><strong>Training Set:</strong> 93,085 URLs from 33 unique clients.</li>
+        <li><strong>Unseen Test Set:</strong> 8,356 URLs from 11 completely held-out clients.</li>
+    </ul>
+
+    <h2 id="results">5. Results</h2>
+    <p>
+        Models were benchmarked on the unseen client-holdout test set using ROC AUC to evaluate true ranking capability across varying classification thresholds.
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Method / Model</th>
+                <th>Test ROC AUC</th>
+                <th>Architecture / Parameters</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Heuristic Baseline</strong></td>
+                <td>0.5959</td>
+                <td>Transparent formula: <code>log1p(impressions) * (1 / (ctr + 0.1))</code></td>
+            </tr>
+            <tr>
+                <td><strong>Logistic Regression</strong></td>
+                <td>0.6834</td>
+                <td>L2 Regularized linear classifier, <code>max_iter=1000</code></td>
+            </tr>
+            <tr>
+                <td><strong>Random Forest Classifier</strong></td>
+                <td><strong>0.6972</strong></td>
+                <td>100 trees, <code>max_depth=8</code>, Gini impurity criterion</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="figure">
+        <img src="modelcomparison.png" alt="Model vs Baseline ROC AUC Performance">
+        <div class="caption">Figure 1. ROC AUC scores across models evaluated on unseen client test partitions.</div>
+    </div>
+
+    <div class="figure">
+        <img src="featureimportance.png" alt="Feature Importances for Opportunity Scoring">
+        <div class="caption">Figure 2. Gini importance of search visibility and user interaction signals.</div>
+    </div>
+
+    <p>
+        Random Forest achieved the strongest discriminative capability (0.697 ROC AUC), outperforming the baseline by +0.101. Feature attribution confirms that impression scale and CTR serve as the primary drivers of opportunity detection, while organic sessions and scroll events provide stabilizing behavioral context.
+    </p>
+
+    <h2 id="limitations">6. Limitations & Honest Framing</h2>
+    <ul>
+        <li><strong>AI Referral Sparsity:</strong> AI traffic (<code>total_ai_sessions</code>) contributed under 1% of feature importance, indicating that generative engine referral signals are still too sparse in current warehouse tables to serve as reliable decision drivers.</li>
+        <li><strong>Seasonality Blindness:</strong> Evaluating a single month (March 2026) cannot isolate annual cyclical shifts. Certain URLs flagged for decay may represent seasonal demand drops rather than content quality issues.</li>
+        <li><strong>Technical Stock & Error Blindspots:</strong> Search performance data lacks downstream inventory signals. Flagged URLs that represent out-of-stock products or broken redirects cannot be repaired by editorial updates alone.</li>
+    </ul>
+
+    <h2 id="recommendations">7. Ranked Recommendations (Action Playbook)</h2>
+    <ol>
+        <li><strong>Tier 1 Queue (Model Probabilities &gt; 0.75):</strong> Deploy immediate editorial refreshes to pages with high impressions and second-page rankings to recapture first-page visibility.</li>
+        <li><strong>Mandatory Inventory Verification:</strong> Editorial teams must cross-check high-priority flagged pages against product availability before committing copywriting resources.</li>
+        <li><strong>Exclude Sparse AI Features:</strong> Production pipelines should avoid heavy model weighting on generative search metrics until warehouse density matures.</li>
+    </ol>
+
+    <h2 id="reproducibility">8. Reproducibility</h2>
+    <p>
+        The complete analytical workflow, DuckDB feature extraction queries, and Scikit-learn model definitions are reproducible via our public repository:
+    </p>
+    <p>
+        <code>Repository:</code> <a href="https://github.com/Oguzhandyr/FlyRank-ML-Capstone" target="_blank">github.com/Oguzhandyr/FlyRank-ML-Capstone</a><br>
+        <code>Environment:</code> Python 3.10+, DuckDB 1.1+, PyArrow, Scikit-learn 1.4+.
+    </p>
+
+    <h2 id="acknowledgments">9. Acknowledgments & Data Credit</h2>
+    <p>
+        This research paper was developed as part of the FlyRank Machine Learning Internship (2026). Dataset access provided via <a href="https://flyrank.ai" target="_blank">FlyRank.ai</a> enterprise search performance warehouse.
+    </p>
+
+</body>
+</html>
